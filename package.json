@@ -1,0 +1,49 @@
+{
+  "name": "ner-logistics-backend",
+  "version": "1.0.0",
+  "description": "AI-Based Smart Logistics and Accessibility Intelligence Platform for the North Eastern Region (NER)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "db:migrate": "node scripts/run-migrations.js"
+  },
+  "keywords": [
+    "logistics",
+    "gis",
+    "postgis",
+    "express",
+    "socket.io",
+    "ner"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^0.525.0",
+    "maplibre-gl": "^5.8.0",
+    "pg": "^8.12.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.8.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.11",
+    "@types/geojson": "^7946.0.16",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.6.0",
+    "nodemon": "^3.1.14",
+    "tailwindcss": "^4.1.11",
+    "typescript": "~5.7.2",
+    "vite": "^6.3.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
