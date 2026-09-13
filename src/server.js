@@ -18,6 +18,11 @@ const syncRoutes = require('./routes/syncRoutes');
 const weatherRoutes = require('./routes/weatherRoutes');
 const { startAlertEngine } = require('./services/alertEngine');
 const { startWeatherMonitor } = require('./services/weatherMonitor');
+const {
+  featuresRouter,
+  startFeatureWorkers,
+  startFeatureListeners,
+} = require('../features');
 
 // ---- Middleware ----
 const errorHandler = require('./middleware/errorHandler');
@@ -60,6 +65,12 @@ app.use('/api/route', routeRoutes);
 app.use('/api/sync', syncRoutes);
 app.use('/api/weather', weatherRoutes);
 
+// ---- Modular feature routes (additive: citizen portal, messaging, …) ----
+app.use('/api/v1/features', featuresRouter);
+
+// ---- Citizen photo uploads (feature-provided static files) ----
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+
 // ---- Frontend static hosting (built Vite/React bundle) ----
 const DIST_DIR = path.join(__dirname, '..', 'dist');
 const HAS_FRONTEND_BUILD = fs.existsSync(path.join(DIST_DIR, 'index.html'));
@@ -97,6 +108,7 @@ async function start() {
     setupSockets(io);
     startAlertEngine(io);
     startWeatherMonitor(io);
+    startFeatureWorkers(io);
 
     server.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);
@@ -104,6 +116,7 @@ async function start() {
       if (HAS_FRONTEND_BUILD) {
         console.log(`Frontend SPA served at http://localhost:${PORT}`);
       }
+      startFeatureListeners();
     });
   } catch (err) {
     console.error('Failed to start server:', err.message);
